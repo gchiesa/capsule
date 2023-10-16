@@ -17,6 +17,8 @@ type TenantSpec struct {
 	NamespaceOptions *NamespaceOptions `json:"namespaceOptions,omitempty"`
 	// Specifies options for the Service, such as additional metadata or block of certain type of Services. Optional.
 	ServiceOptions *api.ServiceOptions `json:"serviceOptions,omitempty"`
+	// Specifies options for the Pods, such additional metadata to enforce on each pod part of the tenant
+	PodOptions *api.PodOptions `json:"podOptions,omitempty"`
 	// Specifies the allowed StorageClasses assigned to the Tenant.
 	// Capsule assures that all PersistentVolumeClaim resources created in the Tenant can use only one of the allowed StorageClasses.
 	// A default value can be specified, and all the PersistentVolumeClaim resources created will inherit the declared class.

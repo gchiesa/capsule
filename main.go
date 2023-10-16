@@ -31,6 +31,7 @@ import (
 	capsulev1beta1 "github.com/projectcapsule/capsule/api/v1beta1"
 	capsulev1beta2 "github.com/projectcapsule/capsule/api/v1beta2"
 	configcontroller "github.com/projectcapsule/capsule/controllers/config"
+	podlabelscontroller "github.com/projectcapsule/capsule/controllers/podlabels"
 	"github.com/projectcapsule/capsule/controllers/pv"
 	rbaccontroller "github.com/projectcapsule/capsule/controllers/rbac"
 	"github.com/projectcapsule/capsule/controllers/resources"
@@ -289,6 +290,13 @@ func main() {
 		VersionMajor: kubeVersion.Major(),
 	}).SetupWithManager(ctx, manager); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "EndpointSliceLabels")
+	}
+
+	if err = (&podlabelscontroller.PodLabelsReconciler{
+		Log: ctrl.Log.WithName("controllers").WithName("PodLabels"),
+	}).SetupWithManager(ctx, manager); err != nil {
+		setupLog.Error(err, "unable to create controller", "controller", "PodLabels")
+		os.Exit(1)
 	}
 
 	if err = (&pv.Controller{}).SetupWithManager(manager); err != nil {
