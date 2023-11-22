@@ -331,8 +331,6 @@ e2e-install:
 		--create-namespace \
 		--set 'manager.image.pullPolicy=Never' \
 		--set 'manager.resources=null'\
-		--set "manager.image.registry=$(REGISTRY)" \
-		--set "manager.image.repository=$(REPOSITORY)" \
 		--set "manager.image.tag=$(VERSION)" \
 		--set 'manager.livenessProbe.failureThreshold=10' \
 		--set 'manager.readinessProbe.failureThreshold=10' \
@@ -346,7 +344,7 @@ e2e-load-image: ko-build-all
 
 .PHONY: e2e-exec
 e2e-exec: ginkgo
-	$(GINKGO) --flake-attempts=3 -v -tags e2e ./e2e
+	$(GINKGO) -v -tags e2e ./e2e
 
 .PHONY: e2e-destroy
 e2e-destroy:
